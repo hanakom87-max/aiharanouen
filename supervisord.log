@@ -24,3 +24,7 @@
 2025-08-19 10:21:07,167 WARN stopped: webserver (terminated by SIGTERM)
 2025-08-19 10:21:07,171 INFO spawned: 'webserver' with pid 6088
 2025-08-19 10:21:08,173 INFO success: webserver entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-19 10:24:07,573 INFO waiting for webserver to stop
+2025-08-19 10:24:07,574 WARN stopped: webserver (terminated by SIGTERM)
+2025-08-19 10:24:07,580 INFO spawned: 'webserver' with pid 6446
+2025-08-19 10:24:08,583 INFO success: webserver entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
