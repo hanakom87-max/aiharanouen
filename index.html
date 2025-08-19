@@ -1,34 +1,293 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>練馬あいはら農園</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>練馬あいはら農園 - 野菜を買いに</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+        .nav-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+        .main-content {
+            margin-top: 80px;
+        }
+        .tomato-logo {
+            width: 30px;
+            height: 30px;
+            margin-right: 8px;
+        }
+        .gradient-button {
+            background: linear-gradient(135deg, #8B5CF6, #EC4899);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .gradient-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+        }
+        .yellow-bg-box {
+            background-color: #fefce8;
+            border: 2px solid #fde047;
+            border-radius: 12px;
+            padding: 24px;
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            height: 200px;
+        }
+        .photo-left {
+            grid-row: span 2;
+            background: #fecaca;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #dc2626;
+            font-size: 48px;
+        }
+        .photo-top, .photo-bottom {
+            background: #bfdbfe;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+            font-size: 32px;
+        }
+        .gallery-item {
+            aspect-ratio: 1;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+        }
+        .footer-bg {
+            background-color: #fecaca;
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <h1>練馬あいはら農園</h1>
-    <nav>
-      <ul>
-        <li><a href="#">ホーム</a></li>
-        <li><a href="#">作物</a></li>
-        <li><a href="#">豆知識</a></li>
-        <li><a href="#">レシピ</a></li>
-        <li><a href="#">お問い合わせ</a></li>
-      </ul>
+<body class="bg-white">
+    <!-- 固定ナビゲーション -->
+    <nav class="nav-fixed">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-center space-x-8">
+                <div class="flex items-center">
+                    <img src="https://cdn1.genspark.ai/user-upload-image/gpt_image_generated/94089638-6954-4492-9295-d9a2c4559d6a" alt="トマトロゴ" class="tomato-logo">
+                    <a href="#" class="text-gray-800 font-medium hover:text-red-600 transition-colors">ホーム</a>
+                </div>
+                <a href="#" class="text-gray-800 font-medium hover:text-red-600 transition-colors">作物</a>
+                <a href="#" class="text-gray-800 font-medium hover:text-red-600 transition-colors">豆知識</a>
+                <a href="#" class="text-gray-800 font-medium hover:text-red-600 transition-colors">レシピ</a>
+                <a href="#" class="text-gray-800 font-medium hover:text-red-600 transition-colors">問合せ</a>
+            </div>
+        </div>
     </nav>
-  </header>
 
-  <main>
-    <section>
-      <h2>農園の紹介</h2>
-      <p>東京都練馬区田柄で農業を営んでいる「練馬あいはら農園」です。江戸時代から続く農家で、現在19代目！トマトを中心に、珍しい野菜もたくさん育てています。</p>
-    </section>
-  </main>
+    <!-- メインコンテンツ -->
+    <div class="main-content">
+        <!-- ヒーローセクション -->
+        <section class="text-center py-16 px-4">
+            <div class="mb-8">
+                <i class="fas fa-bicycle text-red-500 text-6xl mb-4"></i>
+            </div>
+            <h1 class="text-5xl font-bold mb-4">
+                <span class="text-gray-800">野菜を買いに</span><br>
+                <span class="text-green-600">練馬</span> 
+                <span class="text-red-600">あいはら</span> 
+                <span class="text-gray-800">農園</span>
+            </h1>
+        </section>
 
-  <footer>
-    <p>&copy; 2025 練馬あいはら農園</p>
-  </footer>
+        <!-- メインビジュアル -->
+        <section class="text-center py-12 px-4 bg-pink-50">
+            <div class="mb-6">
+                <i class="fas fa-seedling text-red-500 text-4xl"></i>
+            </div>
+            <p class="text-xl text-gray-700">新鮮なトマトをメインに、四季折々の野菜をお届け</p>
+        </section>
+
+        <!-- 農園について -->
+        <section class="py-16 px-4">
+            <div class="container mx-auto max-w-6xl">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <!-- 左側：紹介文 -->
+                    <div class="yellow-bg-box">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">農園について</h2>
+                        <div class="space-y-4 text-gray-700 leading-relaxed">
+                            <p class="text-lg font-semibold text-green-700">
+                                🌾 江戸時代から続く農家　現在19代目👨‍🌾！
+                            </p>
+                            <p>
+                                東京都練馬区田柄で農業を営んでいる<br>
+                                <span class="text-red-600 font-semibold">"練馬あいはら農園"</span>です。
+                            </p>
+                            <p>
+                                トマトをメインに四季折々の定番野菜から<br>
+                                スーパーに並んでいないような珍しい野菜を<br>
+                                栽培しています。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- 右側：写真 -->
+                    <div class="photo-grid">
+                        <div class="photo-left">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="photo-top">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="photo-bottom">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Instagramフォトギャラリー -->
+        <section class="py-16 px-4 bg-gray-50">
+            <div class="container mx-auto max-w-6xl text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                    <i class="fab fa-instagram text-pink-500 mr-2"></i>
+                    農園フォトギャラリー
+                </h2>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-12">
+                    <div class="gallery-item bg-pink-400">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div class="gallery-item bg-green-400">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div class="gallery-item bg-yellow-400">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div class="gallery-item bg-purple-400">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                </div>
+
+                <p class="text-gray-600 mb-6">Instagramで最新情報をチェック！</p>
+                <a href="#" class="gradient-button">
+                    <i class="fab fa-instagram mr-2"></i>
+                    @aihara_farm をフォロー
+                </a>
+            </div>
+        </section>
+
+        <!-- 3色ミニトマトロゴセクション -->
+        <section class="py-12 px-4 text-center">
+            <div class="container mx-auto max-w-md">
+                <img src="https://cdn1.genspark.ai/user-upload-image/gpt_image_generated/9d069f69-65ab-4ebb-960f-d373cfe45607" alt="あいはら農園3色ミニトマトロゴ" class="w-full mb-6">
+                <p class="text-gray-600 leading-relaxed">
+                    赤・黄・緑の3色ミニトマトは、あいはら農園の特産の一品です。<br>
+                    それぞれ異なる甘みと酸味のバランスをお楽しみください。
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <!-- フッター -->
+    <footer class="footer-bg py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-800">
+                <!-- アクセス -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 flex items-center">
+                        <i class="fas fa-map-marker-alt text-red-600 mr-2"></i>
+                        アクセス
+                    </h3>
+                    <div class="space-y-2 text-sm">
+                        <p class="font-semibold">練馬あいはら農園</p>
+                        <p>〒179-0073</p>
+                        <p>東京都練馬区田柄</p>
+                        <div class="mt-4 bg-gray-200 p-4 rounded-lg">
+                            <p class="text-center text-gray-600">
+                                <i class="fas fa-map text-2xl"></i><br>
+                                Googleマップ
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- サイトマップ -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 flex items-center">
+                        <i class="fas fa-sitemap text-green-600 mr-2"></i>
+                        サイトマップ
+                    </h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-red-600 flex items-center"><i class="fas fa-home mr-2"></i>ホーム</a></li>
+                        <li><a href="#" class="hover:text-red-600 flex items-center"><i class="fas fa-carrot mr-2"></i>作物</a></li>
+                        <li><a href="#" class="hover:text-red-600 flex items-center"><i class="fas fa-lightbulb mr-2"></i>豆知識</a></li>
+                        <li><a href="#" class="hover:text-red-600 flex items-center"><i class="fas fa-utensils mr-2"></i>レシピ</a></li>
+                        <li><a href="#" class="hover:text-red-600 flex items-center"><i class="fas fa-envelope mr-2"></i>お問い合わせ</a></li>
+                    </ul>
+                </div>
+
+                <!-- お問い合わせ・SNS -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 flex items-center">
+                        <i class="fas fa-envelope text-blue-600 mr-2"></i>
+                        お問い合わせ・SNS
+                    </h3>
+                    <div class="space-y-3">
+                        <p class="text-sm">
+                            <i class="fas fa-envelope mr-2"></i>
+                            info@aihara-farm.com
+                        </p>
+                        <div class="flex space-x-3">
+                            <a href="#" class="bg-pink-500 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-600 transition-colors">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="#" class="bg-sky-500 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-sky-600 transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-8 border-t border-red-300 text-center text-sm text-gray-600">
+                <p>&copy; 2024 練馬あいはら農園 All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
-
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDnlV%2F5QLLWDCXsR08aMscsqexV8c8bYRlPMYr2mSS%2B6r%2FLuIh4ljyLAlxlA3wIXoUq3f%2BJObYVaMOVTTEE6FPhKSRFEuP7J1YV4WrKyP3aHG%2FKzIFF57oBq6GXDXeNcYsSyPtT7duAydpHAm2M0MyCFiHyX41%2Bj1iA4%2F%2FHhojLHGTcVhXEZc%2FRIV%2BdCsPgnZ1lBbP5gXoes8KFPVa3d%2BlTATx5EuQdS3lcihjhQbswshIAEmXD8PVSElldAv06ma%2B8AWDmoX6bTF7b8MrL9T%2BfXzGLZk17N1yNaFTUwChU%2FI6KnEmHvXRBHr3S3FGVs65%2BT460cEOmMxD8HBcpACXwhFIkndxb1nSf80%2BScDgqpHeYQKRYx4f%2FLmhLQPn8nivlk9p7nViCqNsNfCWHEfr%2FDRktyG1ij3aelZ4dX75BKw1JKPgnjHTasTg4vhdOu9z%2F0miC8UNJuVJiFHg5x0ylF9W6K3L9cLn8M5k2zRTaHmx1yf2iX%2BWJ4ADtLC9v3h5JLV1QANsRuv3EtF5bqyFl8%3D";
+        window.__genspark_locale = "ja-JP";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDnlV/5QLLWDCXsR08aMscsqexV8c8bYRlPMYr2mSS+6r/LuIh4ljyLAlxlA3wIXoUq3f+JObYVaMOVTTEE6FPhKSRFEuP7J1YV4WrKyP3aHG/KzIFF57oBq6GXDXeNcYsSyPtT7duAydpHAm2M0MyCFiHyX41+j1iA4//HhojLHGTcVhXEZc/RIV+dCsPgnZ1lBbP5gXoes8KFPVa3d+lTATx5EuQdS3lcihjhQbswshIAEmXD8PVSElldAv06ma+8AWDmoX6bTF7b8MrL9T+fXzGLZk17N1yNaFTUwChU/I6KnEmHvXRBHr3S3FGVs65+T460cEOmMxD8HBcpACXwhFIkndxb1nSf80+ScDgqpHeYQKRYx4f/LmhLQPn8nivlk9p7nViCqNsNfCWHEfr/DRktyG1ij3aelZ4dX75BKw1JKPgnjHTasTg4vhdOu9z/0miC8UNJuVJiFHg5x0ylF9W6K3L9cLn8M5k2zRTaHmx1yf2iX+WJ4ADtLC9v3h5JLV1QANsRuv3EtF5bqyFl8=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
