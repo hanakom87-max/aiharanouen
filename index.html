@@ -87,6 +87,104 @@
         .footer-bg {
             background-color: #fecaca;
         }
+        
+        /* トマト写真モザイクグリッド */
+        .tomato-mosaic-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 200px);
+            gap: 16px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .tomato-photo {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .tomato-photo:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* グリッドレイアウト - モザイクスタイル */
+        .tomato-photo-1 {
+            grid-column: 1 / 3;
+            grid-row: 1 / 2;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+        }
+        
+        .tomato-photo-2 {
+            grid-column: 3 / 5;
+            grid-row: 1 / 3;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+        
+        .tomato-photo-3 {
+            grid-column: 1 / 2;
+            grid-row: 2 / 4;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+        
+        .tomato-photo-4 {
+            grid-column: 2 / 4;
+            grid-row: 2 / 3;
+            background: linear-gradient(135deg, #eab308, #ca8a04);
+        }
+        
+        .tomato-photo-5 {
+            grid-column: 2 / 3;
+            grid-row: 3 / 4;
+            background: linear-gradient(135deg, #facc15, #eab308);
+        }
+        
+        .tomato-photo-6 {
+            grid-column: 3 / 5;
+            grid-row: 3 / 4;
+            background: linear-gradient(135deg, #7c2d12, #92400e);
+        }
+        
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            .tomato-mosaic-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(3, 160px);
+                gap: 12px;
+            }
+            
+            .tomato-photo-1 {
+                grid-column: 1 / 3;
+                grid-row: 1 / 2;
+            }
+            
+            .tomato-photo-2 {
+                grid-column: 1 / 2;
+                grid-row: 2 / 3;
+            }
+            
+            .tomato-photo-3 {
+                grid-column: 2 / 3;
+                grid-row: 2 / 3;
+            }
+            
+            .tomato-photo-4 {
+                grid-column: 1 / 2;
+                grid-row: 3 / 4;
+            }
+            
+            .tomato-photo-5 {
+                grid-column: 2 / 3;
+                grid-row: 3 / 4;
+            }
+            
+            .tomato-photo-6 {
+                display: none; /* モバイルでは5枚で十分 */
+            }
+        }
     </style>
 </head>
 <body class="bg-white">
@@ -122,11 +220,38 @@
         </section>
 
         <!-- メインビジュアル -->
-        <section class="text-center py-12 px-4 bg-pink-50">
-            <div class="mb-6">
-                <i class="fas fa-seedling text-red-500 text-4xl"></i>
+        <section class="py-16 px-4 bg-gradient-to-b from-pink-50 to-orange-50">
+            <div class="container mx-auto max-w-6xl">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                        <i class="fas fa-seedling text-red-500 mr-2"></i>
+                        鮮やかなトマトの世界
+                    </h2>
+                    <p class="text-xl text-gray-700">新鮮なトマトをメインに、四季折々の野菜をお届け</p>
+                </div>
+                
+                <!-- トマト写真モザイクグリッド -->
+                <div class="tomato-mosaic-grid">
+                    <div class="tomato-photo tomato-photo-1">
+                        <img src="https://page.gensparksite.com/v1/base64_upload/2311e17c20682b88d655dd5f36c3dc42" alt="房なりオレンジトマト" class="w-full h-full object-cover">
+                    </div>
+                    <div class="tomato-photo tomato-photo-2">
+                        <img src="https://page.gensparksite.com/v1/base64_upload/72d5d5b85d6c5ae038c540e276c56cd1" alt="ハウス栽培風景" class="w-full h-full object-cover">
+                    </div>
+                    <div class="tomato-photo tomato-photo-3">
+                        <img src="https://page.gensparksite.com/v1/base64_upload/e09b8125235535114e6030ca3f69e1db" alt="手に持つミニトマト" class="w-full h-full object-cover">
+                    </div>
+                    <div class="tomato-photo tomato-photo-4">
+                        <img src="https://page.gensparksite.com/v1/base64_upload/9b88f79db3f1f881ef0b61637c709b9c" alt="カラフルトマト" class="w-full h-full object-cover">
+                    </div>
+                    <div class="tomato-photo tomato-photo-5">
+                        <img src="https://page.gensparksite.com/v1/base64_upload/f16997cd7fa885c8d180c53447a7edd2" alt="黄色いミニトマト" class="w-full h-full object-cover">
+                    </div>
+                    <div class="tomato-photo tomato-photo-6">
+                        <img src="https://page.gensparksite.com/v1/base64_upload/c85c8cef074526621f70b503083af469" alt="濃い赤紫トマト" class="w-full h-full object-cover">
+                    </div>
+                </div>
             </div>
-            <p class="text-xl text-gray-700">新鮮なトマトをメインに、四季折々の野菜をお届け</p>
         </section>
 
         <!-- 農園について -->
