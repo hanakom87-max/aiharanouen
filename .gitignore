@@ -1,0 +1,7 @@
+
+# Supervisor daemon files
+supervisord.log
+supervisord.pid
+webserver*.log
+supervisor.sock
+web_server.py
