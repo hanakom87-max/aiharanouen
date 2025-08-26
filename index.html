@@ -153,11 +153,18 @@
         }
         
         .carousel-slide {
-            /* 6枚表示のための幅計算: 全体の1/6 - gap */
+            /* デスクトップ: 6枚表示のための幅計算 */
             width: calc((100% / 3) / 6 - 10px); /* 3倍幅の1/18 - gap */
             height: 100%;
             flex-shrink: 0;
             margin-right: 10px; /* 写真間のスペース */
+        }
+        
+        /* スマホ表示: 3枚表示に変更 */
+        @media (max-width: 767px) {
+            .carousel-slide {
+                width: calc((100% / 3) / 3 - 10px); /* 3倍幅の1/9 - gap */
+            }
         }
         
         .carousel-slide:last-child {
@@ -365,9 +372,9 @@
                             <img src="https://page.gensparksite.com/v1/base64_upload/efdc3bea354dda2065c94bbec9f3c047" alt="新鮮なとうもろこしの収穫 - あいはら農園の多彩な作物">
                         </div>
                         
-                        <!-- メインの10枚の写真（ユーザー提供順） -->
+                        <!-- メインの10枚の写真（番号順に修正） -->
                         <div class="carousel-slide">
-                            <img src="https://page.gensparksite.com/v1/base64_upload/d91d17518514822d7a4082245a602bfd" alt="カラフルな野菜 - 緑のネギとピンクの大根">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/19a5e49a0555709b340fb46ca6a819dc" alt="カラフルな野菜 - 緑のネギとピンクの大根">
                         </div>
                         <div class="carousel-slide">
                             <img src="https://page.gensparksite.com/v1/base64_upload/e09b8125235535114e6030ca3f69e1db" alt="トマト帽子をかぶった子供 - あいはら農園の楽しい農業体験">
@@ -399,7 +406,7 @@
                         
                         <!-- 無限ループ用: 最初の写真を最後に複製 -->
                         <div class="carousel-slide">
-                            <img src="https://page.gensparksite.com/v1/base64_upload/d91d17518514822d7a4082245a602bfd" alt="カラフルな野菜 - 緑のネギとピンクの大根">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/19a5e49a0555709b340fb46ca6a819dc" alt="カラフルな野菜 - 緑のネギとピンクの大根">
                         </div>
                         <div class="carousel-slide">
                             <img src="https://page.gensparksite.com/v1/base64_upload/e09b8125235535114e6030ca3f69e1db" alt="トマト帽子をかぶった子供 - あいはら農園の楽しい農業体験">
@@ -431,7 +438,7 @@
                         
                         <!-- 3番目のセット: さらに繰り返し -->
                         <div class="carousel-slide">
-                            <img src="https://page.gensparksite.com/v1/base64_upload/d91d17518514822d7a4082245a602bfd" alt="カラフルな野菜 - 緑のネギとピンクの大根">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/19a5e49a0555709b340fb46ca6a819dc" alt="カラフルな野菜 - 緑のネギとピンクの大根">
                         </div>
                     </div>
                 </div>
