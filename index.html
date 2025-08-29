@@ -111,26 +111,156 @@
                 height: auto;
             }
         }
-        /* パノラマ画像のスマホ最適化 */
-        .panorama-container {
+        /* 無限スクロールカルーセル - 6枚同時表示、両端見切れ */
+        .carousel-container {
             position: relative;
             width: 100%;
-            height: 12rem; /* 192px - スマホ用により高く */
+            height: 12rem; /* 192px - スマホ用 */
+            overflow: hidden;
         }
         @media (min-width: 640px) {
-            .panorama-container {
+            .carousel-container {
                 height: 14rem; /* 224px - sm以上 */
             }
         }
         @media (min-width: 768px) {
-            .panorama-container {
+            .carousel-container {
                 height: 20rem; /* 320px - md以上 */
             }
         }
         @media (min-width: 1024px) {
-            .panorama-container {
+            .carousel-container {
                 height: 24rem; /* 384px - lg以上 */
             }
+        }
+        
+        .carousel-viewport {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            /* 両端の見切れ効果のためのパディング */
+            padding: 0 -5%;
+            margin: 0 5%;
+        }
+        
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.6s ease-in-out;
+            /* 無限スクロールのために幅を大きく設定 */
+            width: calc(100% * 3); /* 3倍の幅で無限ループ用 */
+        }
+        
+        .carousel-slide {
+            /* デスクトップ: 6枚表示のための幅計算 */
+            width: calc((100% / 3) / 6 - 10px); /* 3倍幅の1/18 - gap */
+            height: 100%;
+            flex-shrink: 0;
+            margin-right: 10px; /* 写真間のスペース */
+        }
+        
+        /* スマホ表示: 3枚表示に変更 */
+        @media (max-width: 767px) {
+            .carousel-slide {
+                width: calc((100% / 3) / 3 - 10px); /* 3倍幅の1/9 - gap */
+            }
+        }
+        
+        .carousel-slide:last-child {
+            margin-right: 0;
+        }
+        
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        
+        .carousel-slide img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-nav:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .carousel-nav.prev {
+            left: 10px;
+        }
+        
+        .carousel-nav.next {
+            right: 10px;
+        }
+        
+        .carousel-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+        
+        .carousel-dot:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .carousel-pause-indicator {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .carousel-pause-indicator.show {
+            opacity: 1;
         }
     </style>
     
@@ -232,10 +362,113 @@
 
         </section>
 
-        <!-- メインビジュアル -->
+        <!-- メインビジュアル（画像カルーセル） -->
         <section class="py-0 px-0">
-            <div class="panorama-container overflow-hidden">
-                <img src="https://cdn1.genspark.ai/user-upload-image/11_generated/6fd7d2a3-5a44-4c50-8505-eea4e2fd62f8" alt="あいはら農園のトマト栽培風景 - トマト帽子をかぶったスタッフ、成長過程のトマト、収穫の様子" class="w-full h-full object-cover object-center" style="image-rendering: high-quality; image-rendering: -webkit-optimize-contrast; max-width: none;">
+            <div class="carousel-container" id="image-carousel">
+                <div class="carousel-viewport">
+                    <div class="carousel-track" id="carousel-track" style="transition: transform 0.6s ease-in-out; transform: translateX(-57.1429%);">
+                        <!-- 無限ループ用: 最後の写真を最初に複製 -->
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/9b88f79db3f1f881ef0b61637c709b9c" alt="黄色いミニトマトの房 - あいはら農園の色とりどりのトマト">
+                        </div>
+                        
+                        <!-- メインの10枚の写真（ユーザー指定順） -->
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/d91d17518514822d7a4082245a602bfd" alt="カラフルな野菜 - 緑のネギとピンクの大根">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/e09b8125235535114e6030ca3f69e1db" alt="トマト帽子をかぶった子供 - あいはら農園の楽しい農業体験">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/efdc3bea354dda2065c94bbec9f3c047" alt="新鮮なとうもろこしの収穫 - あいはら農園の多彩な作物">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/01eb50ea74740f87e4fa1d0ccbc582ff" alt="カラフルトマトの収穫カゴ - あいはら農園の豊富な品種">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/6fa35dc1a288e1c150e8897cd5066490" alt="親子でトマト収穫体験 - あいはら農園の温かい農業">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/f16997cd7fa885c8d180c53447a7edd2" alt="成長過程の緑のミニトマト - あいはら農園の丁寧な栽培">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/2f6765684d05684ae0dc295800214160" alt="巨大な白いナス - あいはら農園の珍しい野菜">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/2311e17c20682b88d655dd5f36c3dc42" alt="オレンジ色のトマトの房 - あいはら農園の多品種栽培">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/052e4dd212a8efd9b445d8bbf987d79c" alt="トマト農園の全景 - あいはら農園の広大な栽培ハウス">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/9b88f79db3f1f881ef0b61637c709b9c" alt="黄色いミニトマトの房 - あいはら農園の色とりどりのトマト">
+                        </div>
+                        
+                        <!-- 無限ループ用: 最初の写真を最後に複製 -->
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/d91d17518514822d7a4082245a602bfd" alt="カラフルな野菜 - 緑のネギとピンクの大根">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/e09b8125235535114e6030ca3f69e1db" alt="トマト帽子をかぶった子供 - あいはら農園の楽しい農業体験">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/efdc3bea354dda2065c94bbec9f3c047" alt="新鮮なとうもろこしの収穫 - あいはら農園の多彩な作物">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/01eb50ea74740f87e4fa1d0ccbc582ff" alt="カラフルトマトの収穫カゴ - あいはら農園の豊富な品種">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/6fa35dc1a288e1c150e8897cd5066490" alt="親子でトマト収穫体験 - あいはら農園の温かい農業">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/f16997cd7fa885c8d180c53447a7edd2" alt="成長過程の緑のミニトマト - あいはら農園の丁寧な栽培">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/2f6765684d05684ae0dc295800214160" alt="巨大な白いナス - あいはら農園の珍しい野菜">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/2311e17c20682b88d655dd5f36c3dc42" alt="オレンジ色のトマトの房 - あいはら農園の多品種栽培">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/052e4dd212a8efd9b445d8bbf987d79c" alt="トマト農園の全景 - あいはら農園の広大な栽培ハウス">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/9b88f79db3f1f881ef0b61637c709b9c" alt="黄色いミニトマトの房 - あいはら農園の色とりどりのトマト">
+                        </div>
+                        
+                        <!-- 3番目のセット: さらに繰り返し -->
+                        <div class="carousel-slide">
+                            <img src="https://page.gensparksite.com/v1/base64_upload/d91d17518514822d7a4082245a602bfd" alt="カラフルな野菜 - 緑のネギとピンクの大根">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ナビゲーションボタン -->
+                <button class="carousel-nav prev" id="carousel-prev" aria-label="前の画像">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-nav next" id="carousel-next" aria-label="次の画像">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <!-- ドットインジケーター -->
+                <div class="carousel-dots" id="carousel-dots">
+                    <div class="carousel-dot" data-slide="0"></div>
+                    <div class="carousel-dot active" data-slide="1"></div>
+                    <div class="carousel-dot" data-slide="2"></div>
+                    <div class="carousel-dot" data-slide="3"></div>
+                    <div class="carousel-dot" data-slide="4"></div>
+                    <div class="carousel-dot" data-slide="5"></div>
+                    <div class="carousel-dot" data-slide="6"></div>
+                    <div class="carousel-dot" data-slide="7"></div>
+                    <div class="carousel-dot" data-slide="8"></div>
+                    <div class="carousel-dot" data-slide="9"></div>
+                </div>
+                
+                <!-- 一時停止インジケーター -->
+                <div class="carousel-pause-indicator" id="carousel-pause-indicator">
+                    自動スクロール一時停止中
+                </div>
             </div>
         </section>
 
@@ -353,7 +586,7 @@
                     <div class="space-y-2 md:space-y-3">
                         <p class="text-xs md:text-sm">
                             <i class="fas fa-envelope mr-1 md:mr-2 text-xs"></i>
-                            <span class="text-xs md:text-sm"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="01686f676e416068696073602c6760736c2f626e6c">[email&#160;protected]</a></span>
+                            <span class="text-xs md:text-sm"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="01686f676e416068696073602c6760736c2f626e6c">[email&nbsp;protected]</a></span>
                         </p>
                         <div class="flex space-x-1 md:space-x-3">
                             <a href="https://www.instagram.com/aihara_farm/" target="_blank" rel="noopener noreferrer" class="bg-pink-500 text-white w-6 h-6 md:w-10 md:h-10 rounded-full flex items-center justify-center hover:bg-pink-600 transition-colors">
@@ -412,9 +645,207 @@
                     });
                 });
             }
+            
+            // 画像カルーセル機能
+            initImageCarousel();
         });
+        
+        function initImageCarousel() {
+            const carousel = document.getElementById('image-carousel');
+            const carouselTrack = document.getElementById('carousel-track');
+            const prevButton = document.getElementById('carousel-prev');
+            const nextButton = document.getElementById('carousel-next');
+            const dots = document.querySelectorAll('.carousel-dot');
+            const pauseIndicator = document.getElementById('carousel-pause-indicator');
+            
+            if (!carousel || !carouselTrack) return;
+            
+            let currentSlide = 10; // 最初のセットの開始位置（複製された最後の写真の次）
+            const originalSlides = 10; // オリジナルの写真枚数
+            const totalSlides = 21; // 複製含めた総枚数（1 + 10 + 10）
+            let autoScrollInterval;
+            let isAutoScrollPaused = false;
+            let touchStartX = 0;
+            let touchEndX = 0;
+            let isTransitioning = false;
+            
+            // スライドを移動する関数（真の無限スクロール対応）
+            function goToSlide(slideIndex, animate = true) {
+                if (isTransitioning) return;
+                
+                currentSlide = slideIndex;
+                const slideWidth = 100 / totalSlides; // 1枚分の幅（%）
+                const translateX = -(currentSlide * slideWidth);
+                
+                if (animate) {
+                    carouselTrack.style.transition = 'transform 0.6s ease-in-out';
+                    isTransitioning = true;
+                    
+                    // トランジション完了後の処理
+                    setTimeout(() => {
+                        // 境界に達した場合のみ、無音でリセット
+                        if (currentSlide >= totalSlides - 1) {
+                            // 最後に達したら、最初の本物位置にジャンプ（無音）
+                            currentSlide = 1;
+                            carouselTrack.style.transition = 'none';
+                            carouselTrack.style.transform = `translateX(-${currentSlide * slideWidth}%)`;
+                        } else if (currentSlide <= 0) {
+                            // 最初より前に行ったら、最後の本物位置にジャンプ（無音）
+                            currentSlide = originalSlides;
+                            carouselTrack.style.transition = 'none';
+                            carouselTrack.style.transform = `translateX(-${currentSlide * slideWidth}%)`;
+                        }
+                        isTransitioning = false;
+                    }, 600);
+                } else {
+                    carouselTrack.style.transition = 'none';
+                }
+                
+                carouselTrack.style.transform = `translateX(${translateX}%)`;
+                
+                // ドットインジケーターの更新（オリジナルの10枚基準）
+                updateDots();
+            }
+            
+            function updateDots() {
+                // 現在表示中の実際の写真インデックス（0-9の範囲）
+                let realIndex;
+                if (currentSlide === 0) {
+                    // 最初の複製（最後の写真）
+                    realIndex = 9;
+                } else if (currentSlide <= originalSlides) {
+                    // メインのセクション（1-10）
+                    realIndex = currentSlide - 1;
+                } else {
+                    // 複製セクション
+                    realIndex = ((currentSlide - 1) % originalSlides);
+                }
+                
+                dots.forEach((dot, index) => {
+                    if (index === realIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+            
+            // 次のスライドへ（無限スクロール）
+            function nextSlide() {
+                if (isTransitioning) return;
+                goToSlide(currentSlide + 1);
+            }
+            
+            // 前のスライドへ（無限スクロール）
+            function prevSlide() {
+                if (isTransitioning) return;
+                goToSlide(currentSlide - 1);
+            }
+            
+            // 自動スクロール開始
+            function startAutoScroll() {
+                if (autoScrollInterval) clearInterval(autoScrollInterval);
+                autoScrollInterval = setInterval(nextSlide, 4000); // 4秒ごと
+                isAutoScrollPaused = false;
+                pauseIndicator.classList.remove('show');
+            }
+            
+            // 自動スクロール一時停止
+            function pauseAutoScroll() {
+                if (autoScrollInterval) clearInterval(autoScrollInterval);
+                isAutoScrollPaused = true;
+                pauseIndicator.classList.add('show');
+                
+                // 10秒後に自動復帰
+                setTimeout(() => {
+                    if (isAutoScrollPaused) {
+                        startAutoScroll();
+                    }
+                }, 10000);
+            }
+            
+            // イベントリスナー設定
+            if (prevButton) {
+                prevButton.addEventListener('click', function() {
+                    pauseAutoScroll();
+                    prevSlide();
+                });
+            }
+            
+            if (nextButton) {
+                nextButton.addEventListener('click', function() {
+                    pauseAutoScroll();
+                    nextSlide();
+                });
+            }
+            
+            // ドットクリック（無限スクロール用に調整）
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', function() {
+                    pauseAutoScroll();
+                    // ドットのindexを実際のスライド位置に変換
+                    const targetSlide = index + 1; // 複製の最初を除く
+                    goToSlide(targetSlide);
+                });
+            });
+            
+            // ホバー時に自動スクロール一時停止
+            carousel.addEventListener('mouseenter', pauseAutoScroll);
+            carousel.addEventListener('mouseleave', function() {
+                if (isAutoScrollPaused) {
+                    startAutoScroll();
+                }
+            });
+            
+            // タッチ・スワイプ対応
+            carousel.addEventListener('touchstart', function(e) {
+                touchStartX = e.touches[0].clientX;
+                pauseAutoScroll();
+            });
+            
+            carousel.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].clientX;
+                const touchDiff = touchStartX - touchEndX;
+                
+                // スワイプの閾値
+                if (Math.abs(touchDiff) > 50) {
+                    if (touchDiff > 0) {
+                        nextSlide();
+                    } else {
+                        prevSlide();
+                    }
+                }
+            });
+            
+            // キーボード操作対応
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft') {
+                    pauseAutoScroll();
+                    prevSlide();
+                } else if (e.key === 'ArrowRight') {
+                    pauseAutoScroll();
+                    nextSlide();
+                }
+            });
+            
+            // 初期化：開始位置設定と自動スクロール開始
+            goToSlide(currentSlide, false); // 初期位置設定（アニメーションなし）
+            updateDots(); // ドット初期化
+            startAutoScroll();
+            
+            // ページの可視性変更時の処理（タブ切り替え等）
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    if (autoScrollInterval) clearInterval(autoScrollInterval);
+                } else {
+                    if (!isAutoScrollPaused) {
+                        startAutoScroll();
+                    }
+                }
+            });
+        }
     </script>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-</body>
-</html>
+
+<deepl-input-controller translate="no"></deepl-input-controller></body></html>
